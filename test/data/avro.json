@@ -1,0 +1,103 @@
+{
+  "namespace": "foo.bar",
+  "protocol": "TestServer",
+  "types": [
+  {
+    "type": "record",
+    "name": "Custom",
+    "fields": [
+    {
+      "name": "foo",
+      "type": "string"
+    }]
+  },
+  {
+    "type": "record",
+    "name": "Custom2",
+    "fields": [
+    {
+      "name": "bar",
+      "type": "string"
+    }]
+  }],
+  "messages":
+  {
+    "intWithCustom":
+    {
+      "request": [
+      {
+        "name": "type",
+        "type": "string"
+      }],
+      "response": ["int", "Custom"]
+    },
+    "nullWithCustom":
+    {
+      "request": [
+      {
+        "name": "type",
+        "type": "string"
+      }],
+      "response": ["null", "Custom"]
+    },
+    "nullWithInt":
+    {
+      "request": [
+      {
+        "name": "type",
+        "type": "string"
+      }],
+      "response": ["null", "int"]
+    },
+    "custom":
+    {
+      "request": [],
+      "response": "Custom"
+    },
+    "customs":
+    {
+      "request": [],
+      "response":
+      {
+        "type": "array",
+        "items": "Custom"
+      }
+    },
+    "nullWithCustoms":
+    {
+      "request": [
+      {
+        "name": "type",
+        "type": "string"
+      }],
+      "response": ["null",
+      {
+        "type": "array",
+        "items": "Custom"
+      }]
+    },
+    "nullWithArrayOfUnions":
+    {
+      "request": [
+      {
+        "name": "type",
+        "type": "string"
+      }],
+      "response": ["null",
+      {
+        "type": "array",
+        "items": ["int", "string"]
+      }]
+    },
+    "helloWorld":
+    {
+      "request": [
+      {
+        "name": "name",
+        "type": "string",
+        "default": "World"
+      }],
+      "response": "string"
+    }
+  }
+}

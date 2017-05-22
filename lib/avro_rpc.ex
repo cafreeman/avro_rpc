@@ -1,0 +1,2 @@
+defmodule AvroRPC do
+end

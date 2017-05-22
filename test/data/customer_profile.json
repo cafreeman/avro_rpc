@@ -1,0 +1,143 @@
+{
+  "protocol": "CustomerService",
+  "namespace": "com.ojolabs.customer.avro",
+  "types": [
+    {
+      "type": "record",
+      "name": "Customer",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "name": "phoneNumber",
+          "type": "string"
+        },
+        {
+          "name": "data",
+          "type": "string"
+        },
+        {
+          "name": "createdAt",
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        },
+        {
+          "name": "updatedAt",
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        }
+      ]
+    },
+    {
+      "type": "record",
+      "name": "ProfileUpdate",
+      "fields": [
+        {
+          "name": "path",
+          "type": {
+            "type": "array",
+            "items": "string"
+          }
+        },
+        {
+          "name": "jsonValue",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "type": "record",
+      "name": "Version",
+      "fields": [
+        {
+          "name": "commit",
+          "type": "string"
+        },
+        {
+          "name": "tag",
+          "type": "string"
+        },
+        {
+          "name": "author",
+          "type": "string"
+        },
+        {
+          "name": "build",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "messages": {
+    "customerById": {
+      "request": [
+        {
+          "name": "id",
+          "type": "string"
+        }
+      ],
+      "response": ["null", "Customer"]
+    },
+    "customerByPhone": {
+      "request": [
+        {
+          "name": "phoneNumber",
+          "type": "string"
+        }
+      ],
+      "response": ["null", "Customer"]
+    },
+    "recordEvent": {
+      "request": [
+        {
+          "name": "customerId",
+          "type": "string"
+        },
+        {
+          "name": "eventType",
+          "type": "string"
+        },
+        {
+          "name": "eventData",
+          "type": ["null", "string"],
+          "default": null
+        },
+        {
+          "name": "eventMetadata",
+          "type": ["null", "string"],
+          "default": null
+        },
+        {
+          "name": "profileUpdate",
+          "type": ["null", "ProfileUpdate"],
+          "default": null
+        }
+      ],
+      "response": "Customer"
+    },
+    "findOrCreate": {
+      "request": [
+        {
+          "name": "phoneNumber",
+          "type": "string"
+        },
+        {
+          "name": "creationReason",
+          "type": "string"
+        },
+        {
+          "name": "createData",
+          "type": "string",
+          "default": "{}"
+        }
+      ],
+      "response": "Customer"
+    },
+    "getVersion": {
+      "request": [],
+      "response": "Version"
+    }
+  }
+}
