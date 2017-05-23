@@ -14,13 +14,14 @@ defmodule AvroRPC.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    # Specify extra applications you'll use from Erlang/Elixir
     [
       applications: [
         :eavro,
-        :ex_avro
+        # :ex_avro
       ],
-      extra_applications: [:logger]
+    # Specify extra applications you'll use from Erlang/Elixir
+      extra_applications: [:logger],
+      mod: {AvroRPC.Application, %{hostname: 'localhost', port: 9015, protocol: Path.absname("./test/data/avro.json")}}
     ]
   end
 
