@@ -31,6 +31,13 @@
       }],
       "response": ["int", "Custom"]
     },
+    "arrayStrings": {
+      "request": [],
+      "response": {
+        "type": "array",
+        "items": "string"
+      }
+    },
     "nullWithCustom":
     {
       "request": [
@@ -58,10 +65,10 @@
     {
       "request": [],
       "response":
-      {
+      ["null", {
         "type": "array",
         "items": "Custom"
-      }
+      }]
     },
     "nullWithCustoms":
     {

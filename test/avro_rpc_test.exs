@@ -7,6 +7,7 @@ defmodule AvroRPCTest do
     [pid: pid]
   end
 
+  @tag :skip
   test "can connect", context do
     {:ok, user} = AvroRPC.Client.call(context[:pid], :customerByPhone, ["+14692882964"])
     IO.inspect user
