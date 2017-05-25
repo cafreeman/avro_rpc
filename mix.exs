@@ -21,7 +21,7 @@ defmodule AvroRPC.Mixfile do
       ],
     # Specify extra applications you'll use from Erlang/Elixir
       extra_applications: [:logger],
-      mod: {AvroRPC.Application, %{hostname: "localhost", port: 9015, protocol: Path.absname("./test/data/avro.json")}}
+      mod: {AvroRPC.Application, []},
     ]
   end
 
