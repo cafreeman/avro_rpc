@@ -32,19 +32,67 @@ defmodule ConvertArrayTest do
     ]
   }
 
+  @complex_array_with_struct {
+    {
+      :array,
+      %ExAvro.Record{
+        name: :Custom,
+        fields: [
+          %ExAvro.Field{
+            name: "foo",
+            type: :string
+          },
+        ]
+      }
+    },
+    [
+      [
+        ["bar"],
+        ["bar"]
+      ]
+    ]
+  }
+
+  @invalid_complex_array {
+    {
+      :avro_array,
+      {
+        :avro_record,
+        :Custom,
+        [{"foo", :string}, {"bar", :string}]
+      }
+    },
+    [
+      [
+        ["bar"],
+        ["bar"]
+      ]
+    ]
+  }
+
   test "converts a simple avro array" do
-    IO.inspect @simple_array
-    {:ok, converted_array} = AvroRPC.Response.convert(@simple_array)
+    {:ok, converted_array} = AvroRPC.Response.format(@simple_array)
 
     assert is_list(converted_array)
     assert length(converted_array) == 5
     assert converted_array == ["hi", "how", "are", "you", "?"]
   end
 
-  @tag :skip
+  @tag :only
   test "converts an array of avro records" do
-    {:ok, converted_array} = AvroRPC.Response.convert(@complex_array)
+    {:ok, converted_array} = AvroRPC.Response.format(@complex_array)
+    assert [%{"foo" => "bar"}, %{"foo" => "bar"}] == converted_array
+  end
 
-    assert [%{foo: "bar"}, %{foo: "bar"}] == converted_array
+  test "converts an array of avro records with struct definitions" do
+    {:ok, converted_array} = AvroRPC.Response.format(@complex_array_with_struct)
+
+    assert [%{"foo" => "bar"}, %{"foo" => "bar"}] == converted_array
+  end
+
+  test "throws :invalid_length record error in invalid avro record array" do
+    result = AvroRPC.Response.format(@invalid_complex_array)
+    assert elem(result, 0) == :error
+    assert {:invalid_length, "The number of fields do not match the number of values."} == elem(result, 1)
   end
 end

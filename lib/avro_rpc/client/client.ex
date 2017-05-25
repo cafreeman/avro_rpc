@@ -7,12 +7,13 @@ defmodule AvroRPC.Client do
     ]
   end
 
-  def start_link(_config) do
-    GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
+  def start_link(protocol) do
+    parsed_protocol = ExAvro.parse_protocol_file(protocol)
+    GenServer.start_link(__MODULE__, parsed_protocol, name: __MODULE__)
   end
 
-  def init(:ok) do
-    {:ok, :ok}
+  def init(parsed_protocol) do
+    {:ok, %State{protocol: parsed_protocol}}
   end
 
   def call(method, args) do
@@ -21,31 +22,31 @@ defmodule AvroRPC.Client do
 
   ## Callbacks
   def handle_call({:call, method, args}, _from, state) do
-    result = :eavro_rpc_fsm.call(:eavro_rpc_fsm, method, args)
+    result =
+      :eavro_rpc_fsm.call(:eavro_rpc_fsm, method, args)
+      |> add_avro_type_to_response(method, state.protocol)
+      |> AvroRPC.Response.format
+
     {:reply, result, state}
   end
 
-  # def connect(host, port, protocol_file) when is_binary(protocol_file) do
-  #   protocol = parse_protocol_file(protocol_file)
-  #
-  #   case :eavro_rpc_fsm.start_link(to_charlist(host), port, protocol) do
-  #     {:ok, _pid} = result ->
-  #       IO.puts "Opened an Avro RPC connection at #{host} on port #{port}"
-  #       result
-  #     {:error, err} ->
-  #       IO.puts "There was an error connecting to the server"
-  #       {:error, err}
-  #   end
-  # end
-  #
-  # def call(pid, method, args) do
-  #   :eavro_rpc_fsm.call(pid, method, args)
-  # end
-  #
-  # ## Private methods
-  # defp parse_protocol_file(path) do
-  #   path
-  #   |> File.read!
-  #   |> :eavro_rpc_proto.parse_protocol
-  # end
+  defp add_avro_type_to_response({:ok, {_, _} = response_with_schema_info}, _method, _protocol) do
+    IO.puts "Assume we have schema info already"
+    response_with_schema_info
+  end
+
+  defp add_avro_type_to_response({:ok, response}, method, protocol) do
+    IO.puts "Need to look up schema info"
+    find_message_protocol_by_name(method, protocol)
+    |> add_return_type_to_response(response)
+  end
+
+  defp find_message_protocol_by_name(method, protocol) do
+    protocol
+    |> Map.get(:messages)
+    |> Enum.find(fn(msg) -> msg.name == Atom.to_string(method) end)
+    |> Map.get(:return)
+  end
+
+  defp add_return_type_to_response(type_def, response), do: {:ok, {type_def, response}}
 end

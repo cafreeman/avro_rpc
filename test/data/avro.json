@@ -64,11 +64,10 @@
     "customs":
     {
       "request": [],
-      "response":
-      ["null", {
+      "response": {
         "type": "array",
         "items": "Custom"
-      }]
+      }
     },
     "nullWithCustoms":
     {

@@ -5,10 +5,10 @@ defmodule AvroRPC.Client.Supervisor do
     Supervisor.start_link(__MODULE__, config, name: __MODULE__)
   end
 
-  def init(config) do
+  def init(%{protocol: protocol} = config) do
     children = [
       supervisor(AvroRPC.Client.FSM.Supervisor, [config]),
-      worker(AvroRPC.Client, [[]])
+      worker(AvroRPC.Client, [protocol])
     ]
 
     opts = [strategy: :rest_for_one]
