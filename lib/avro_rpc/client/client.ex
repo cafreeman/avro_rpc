@@ -14,7 +14,6 @@ defmodule AvroRPC.Client do
   end
 
   def init([parsed_protocol, name]) do
-    IO.puts "HELLO WORLD"
     {:ok, %State{protocol: parsed_protocol, name: name}}
   end
 
@@ -33,12 +32,10 @@ defmodule AvroRPC.Client do
   end
 
   defp add_avro_type_to_response({:ok, {_, _} = response_with_schema_info}, _method, _protocol) do
-    IO.puts "Assume we have schema info already"
     response_with_schema_info
   end
 
   defp add_avro_type_to_response({:ok, response}, method, protocol) do
-    IO.puts "Need to look up schema info"
     find_message_protocol_by_name(method, protocol)
     |> add_return_type_to_response(response)
   end

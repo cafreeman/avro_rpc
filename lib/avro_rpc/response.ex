@@ -1,6 +1,5 @@
 defmodule AvroRPC.Response do
   def format(response) do
-    IO.puts "Called format/1"
     try do
       convert(response)
     catch
