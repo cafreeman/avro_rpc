@@ -2,10 +2,7 @@ defmodule AvroRPC.Client.Supervisor do
   use Supervisor
 
   def start_link(config) do
-    # IO.puts "in avrorpc.client.supervisor"
-    # IO.inspect config
-    Supervisor.start_link(__MODULE__, config, name: {:via, Registry, {Registry.AvroRPC, {config.name, :client_supervisor}}})
-    # Supervisor.start_link(__MODULE__, config)
+    Supervisor.start_link(__MODULE__, config, name: {:via, Registry, {:avro_rpc_registry, {config.name, :client_supervisor}}})
   end
 
   def init(%{protocol: protocol} = config) do

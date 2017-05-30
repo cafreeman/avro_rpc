@@ -2,7 +2,7 @@ defmodule AvroRPC.Client.FSM.Supervisor do
   use Supervisor
 
   def start_link(config) do
-    Supervisor.start_link(__MODULE__, config, name: {:via, Registry, {Registry.AvroRPC, {config.name, :fsm}}})
+    Supervisor.start_link(__MODULE__, config, name: {:via, Registry, {:avro_rpc_registry, {config.name, :fsm}}})
     # Supervisor.start_link(__MODULE__, config, name: config.name)
   end
 
@@ -22,9 +22,10 @@ defmodule AvroRPC.Client.FSM.Supervisor do
     protocol = :eavro_rpc_proto.parse_protocol_file(protocol_path)
 
     children = [
-      # worker(:gen_fsm, [{:local, {:via, {Registry, {Registry.AvroRPC, {name, :eavro_rpc_fsm}}}}}, :eavro_rpc_fsm, [hostname, port, protocol], []]),
+      worker(:gen_fsm, [{:via, Registry, {:avro_rpc_registry, {name, :eavro_rpc_fsm}}}, :eavro_rpc_fsm, [hostname, port, protocol], []]),
+      # worker(:gen_fsm, [{:via, :avro_rpc_registry, {name, :eavro_rpc_fsm}}, :eavro_rpc_fsm, [hostname, port, protocol], []]),
       # worker(:gen_fsm, [{:local, :eavro_rpc_fsm}, :eavro_rpc_fsm, [hostname, port, protocol], []]),
-      worker(:gen_fsm, [{:local, String.to_atom("eavro_rpc_fsm_#{name}")}, :eavro_rpc_fsm, [hostname, port, protocol], []]),
+      # worker(:gen_fsm, [{:local, String.to_atom("eavro_rpc_fsm_#{name}")}, :eavro_rpc_fsm, [hostname, port, protocol], []]),
     ]
 
     opts = [strategy: :one_for_one]
