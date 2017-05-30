@@ -10,7 +10,7 @@ defmodule AvroRPC.Client do
 
   def start_link(protocol, name) do
     parsed_protocol = ExAvro.parse_protocol_file(protocol)
-    GenServer.start_link(__MODULE__, [parsed_protocol, name], name: {:via, Registry, {:avro_rpc_registry, {name, :client}}})
+    GenServer.start_link(__MODULE__, [parsed_protocol, name], name: AvroRPC.Utils.via_tuple(name, :client))
   end
 
   def init([parsed_protocol, name]) do
@@ -18,14 +18,14 @@ defmodule AvroRPC.Client do
     {:ok, %State{protocol: parsed_protocol, name: name}}
   end
 
-  def call(method, args) do
-    GenServer.call(__MODULE__, {:call, method, args})
+  def call(service_name, method, args) do
+    GenServer.call(AvroRPC.Utils.via_tuple(service_name, :client), {:call, method, args})
   end
 
   ## Callbacks
   def handle_call({:call, method, args}, _from, state) do
     result =
-      :eavro_rpc_fsm.call({:via, Registry, {:avro_rpc_registry, {state.name, :eavro_rpc_fsm}}}, method, args)
+      :eavro_rpc_fsm.call(AvroRPC.Utils.via_tuple(state.name, :eavro_rpc_fsm), method, args)
       |> add_avro_type_to_response(method, state.protocol)
       |> AvroRPC.Response.format
 
