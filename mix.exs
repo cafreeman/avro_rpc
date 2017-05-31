@@ -25,14 +25,14 @@ defmodule AvroRPC.Mixfile do
 
   defp description do
     """
-    `AvroRPC` is an Elixir library for making RPC calls using the [Avro protocol specification](http://avro.apache.org/docs/1.7.7/spec.html). Currently, `AvroRPC` wraps functionality from both the [eavro](https://github.com/SIfoxDevTeam/eavro) and [ex_avro](https://github.com/avvo/ex_avro) libraries and provides a unified client implementation for managing connections and calling methods across multiple `AvroRPC` services.
+    An Elixir package for making `AvroRPC` calls over TCP.
     """
   end
 
   defp package do
     [
       name: :avro_rpc,
-      files: ["lib", "mix.exs", "README*", "readme*", "LICENSE*", "license*"],
+      files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Chris Freeman"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/cafreeman/avro_rpc"}
