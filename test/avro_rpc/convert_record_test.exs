@@ -84,7 +84,6 @@ defmodule ConvertRecordTest do
     ]
   }
 
-  @tag :only
   test "can convert a valid record to map" do
     {:ok, converted_record} = AvroRPC.Response.format(@sample_record)
 

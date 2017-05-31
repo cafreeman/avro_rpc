@@ -78,7 +78,6 @@ defmodule ConvertArrayTest do
     assert converted_array == ["hi", "how", "are", "you", "?"]
   end
 
-  @tag :only
   test "converts an array of avro records" do
     {:ok, converted_array} = AvroRPC.Response.format(@complex_array)
     assert [%{"foo" => "bar"}, %{"foo" => "bar"}] == converted_array

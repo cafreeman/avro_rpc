@@ -2,7 +2,6 @@ defmodule AvroRPC.Client.Supervisor do
   use Supervisor
 
   def start_link(config) do
-    # Supervisor.start_link(__MODULE__, config, name: {:via, Registry, {:avro_rpc_registry, {config.name, :client_supervisor}}})
     Supervisor.start_link(__MODULE__, config, name: AvroRPC.Utils.via_tuple(config.name, :client_supervisor))
   end
 
