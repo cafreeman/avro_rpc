@@ -1,4 +1,15 @@
 defmodule AvroRPC.Response do
+  @moduledoc """
+  A parser for turning AvroRPC responses into Elixir data structures.
+
+  It uses the Avro specification's type definition to reconstruct the field names/data structure in
+  Elixir.
+  """
+
+  @doc """
+  Converts an :eavro_rpc_fsm response into an Elixir data structure.
+  """
+  @spec format(any) :: {:ok, any} | {:error, {atom, String.t}}
   def format(response) do
     try do
       convert(response)

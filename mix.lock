@@ -1,5 +1,10 @@
-%{"eavro": {:git, "https://github.com/sifoxdevteam/eavro.git", "86c15327f10455ce93746dbf03d3e07c0acbea77", [tag: "v0.0.3"]},
+%{"bunt": {:hex, :bunt, "0.2.0", "951c6e801e8b1d2cbe58ebbd3e616a869061ddadcc4863d0a2182541acae9a38", [:mix], [], "hexpm"},
+  "credo": {:hex, :credo, "0.8.0", "187ce36098afef67baa503d0bb3ec047953c88e4c662591371d15ae9ce150119", [:mix], [{:bunt, "~> 0.2.0", [hex: :bunt, repo: "hexpm", optional: false]}], "hexpm"},
+  "dialyxir": {:hex, :dialyxir, "0.5.0", "5bc543f9c28ecd51b99cc1a685a3c2a1a93216990347f259406a910cf048d1d7", [:mix], [], "hexpm"},
+  "earmark": {:hex, :earmark, "1.2.2", "f718159d6b65068e8daeef709ccddae5f7fdc770707d82e7d126f584cd925b74", [:mix], [], "hexpm"},
+  "eavro": {:git, "https://github.com/sifoxdevteam/eavro.git", "86c15327f10455ce93746dbf03d3e07c0acbea77", [tag: "v0.0.3"]},
   "ex_avro": {:hex, :ex_avro, "0.1.0", "eada3d9e9de2268c91dee42572512b46749a74fe1c8f0a6a230ed462b0e768f5", [:mix], [], "hexpm"},
+  "ex_doc": {:hex, :ex_doc, "0.16.1", "b4b8a23602b4ce0e9a5a960a81260d1f7b29635b9652c67e95b0c2f7ccee5e81", [:mix], [{:earmark, "~> 1.1", [hex: :earmark, repo: "hexpm", optional: false]}], "hexpm"},
   "jsx": {:git, "https://github.com/talentdeficit/jsx.git", "d011411c23e9f8c29d98aa1b7a50ddf9709b6a60", [tag: "v1.4.5"]},
   "ranch": {:git, "https://github.com/extend/ranch.git", "22e0f96a6ca9288dca338ffec53f15da06abd839", [ref: "22e0f96"]},
   "zlists": {:git, "https://github.com/vjache/erlang-zlists.git", "6a7a626b52ab004f152792877b83f09dfaea07d5", [branch: "master"]}}
