@@ -25,7 +25,7 @@ defmodule AvroRPC.Mixfile do
 
   defp description do
     """
-    An Elixir package for making `AvroRPC` calls over TCP.
+    An Elixir package for making AvroRPC calls over TCP.
     """
   end
 
@@ -66,7 +66,7 @@ defmodule AvroRPC.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:eavro, git: "https://github.com/sifoxdevteam/eavro.git", tag: "v0.0.3"},
+      {:eavro, git: "https://github.com/sifoxdevteam/eavro.git", tag: "v0.0.3", only: [:dev, :test]},
       {:ex_avro, "~> 0.1.0"},
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},

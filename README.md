@@ -5,11 +5,14 @@
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `avro_rpc` to your list of dependencies in `mix.exs`:
+by adding both `avro_rpc` and `eavro` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:avro_rpc, "~> 0.1.0"}]
+  [
+    {:avro_rpc, "~> 0.1.0"},
+    {:eavro, git: "https://github.com/sifoxdevteam/eavro.git", tag: "v0.0.3"}
+  ]
 end
 ```
 
@@ -51,7 +54,7 @@ config :avro_rpc,
 `AvroRPC` will open a connection for each item in the `services` list of your config.
 
 Each individual element in the `services` list *must* be a `Map` containing the following fields:
-- name (`Atom`): The name of the service you're connecting to
+- name (`atom`): The name of the service you're connecting to
 - hostname (string): The hostname of the AvroRPC endpoint
 - port (number): The port on which the AvroRPC endpoint receives TCP connections.
 - protocol (string): The path to the Avro protocol definition file for the specific service.
